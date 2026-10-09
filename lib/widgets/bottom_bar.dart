@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../screens/home_screens.dart';
 import '../screens/explore_screens.dart';
+import '../screens/profile_screens.dart';
 
 class BottomBar extends StatelessWidget {
   final int currentIndex;
@@ -82,6 +83,15 @@ class BottomBar extends StatelessWidget {
               PageRouteBuilder(
                 pageBuilder: (context, animation, secondaryAnimation) =>
                     const ExploreScreen(),
+                transitionDuration: Duration.zero,
+              ),
+            );
+          } else if (index == 2 && currentIndex != 2) {
+            Navigator.pushReplacement(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    const ProfileScreen(),
                 transitionDuration: Duration.zero,
               ),
             );

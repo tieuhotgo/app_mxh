@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../widgets/bottom_bar.dart';
 import 'home_screens.dart';
 import 'explore_screens.dart';
+import 'profile_screens.dart';
 
 class MainScreen extends StatefulWidget {
   final int initialIndex;
@@ -23,11 +24,9 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _onTabTapped(int index) {
-    if (index <= 1) {
-      setState(() {
-        _currentIndex = index;
-      });
-    }
+    setState(() {
+      _currentIndex = index;
+    });
   }
 
   @override
@@ -38,6 +37,7 @@ class _MainScreenState extends State<MainScreen> {
         children: const [
           HomeScreen(bottomNavigationBar: SizedBox.shrink()),
           ExploreScreen(bottomNavigationBar: SizedBox.shrink()),
+          ProfileScreen(bottomNavigationBar: SizedBox.shrink()),
         ],
       ),
       bottomNavigationBar: BottomBar(

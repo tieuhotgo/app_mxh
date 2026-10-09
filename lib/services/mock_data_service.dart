@@ -40,4 +40,11 @@ class MockDataService {
       (index) => 'assets/images/kham_pha_${index + 1}.webp',
     );
   }
+
+  static List<String> getProfileImages() {
+    return List.generate(
+      9,
+      (index) => 'assets/images/ca_nhan_${index + 1}.webp',
+    );
+  }
 }
