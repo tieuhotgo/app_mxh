@@ -61,6 +61,7 @@ class MockDataService {
     _CommentUser('Trần Văn C', _avatarNam),
     _CommentUser('Phạm Thị D', _avatarNu),
     _CommentUser('Võ Văn E', _avatarNam),
+    _CommentUser('Nguyễn Thị Asa', 'assets/images/avt.webp'),
   ];
 
   static const List<String> _defaultCommentTexts = [
@@ -69,6 +70,7 @@ class MockDataService {
     'Ảnh đẹp quá, bạn chụp ở đâu vậy?',
     'Đúng là chủ đề mình đang quan tâm.',
     'Mong bạn đăng thêm nhiều bài như vậy nữa.',
+    'Bạn ơi cho xin địa chỉ quán với ạ',
   ];
 
   static const Map<String, List<String>> _commentTexts = {
@@ -78,6 +80,7 @@ class MockDataService {
       'Phở Hà Nội đúng chuẩn là ít rau, thêm tí tỏi ngâm giấm. Đồng ý!',
       'Lưu bài lại, lần sau ra Hà Nội nhất định phải thử.',
       'Sáng mai đi ăn phở thôi, cảm ơn bạn đã gợi ý nhé.',
+      'Dở quá bạn ơi cho bạn 5 sao',
     ],
     '2': [
       'Nước biển xanh quá, nhìn mà muốn xách vali đi ngay.',
@@ -85,6 +88,7 @@ class MockDataService {
       'Mùa này đi có đông không bạn, mình đang tính đặt vé.',
       'Cát trắng mịn thật, đúng chuẩn thiên đường luôn.',
       'Ảnh đẹp quá, bạn chụp ở bãi nào vậy?',
+      'Cho mình xin info với ạ',
     ],
     '3': [
       'Cà phê muối là chân ái của mình, uống một lần là nghiện.',
@@ -92,6 +96,7 @@ class MockDataService {
       'Lần đầu nghe vị mặn mà lại hợp với cà phê thế, phải thử mới được.',
       'Chill chill đúng nghĩa, chiều nay mình ghé thử.',
       'Cho mình xin địa chỉ quán với nhé.',
+      'Ừm thấy cũng ok đó, nhưng hơi đắng nha',
     ],
   };
 

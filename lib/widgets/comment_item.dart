@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/comment_model.dart';
+import '../services/app_navigation_service.dart';
 import 'avatar.dart';
 
 class CommentItem extends StatelessWidget {
@@ -8,23 +9,39 @@ class CommentItem extends StatelessWidget {
 
   const CommentItem({super.key, required this.comment});
 
+  static const String _currentUserAvatar = 'assets/images/avt.webp';
+  static const int _profileTabIndex = 2;
+
+  bool get _isCurrentUser => comment.avatarPath == _currentUserAvatar;
+
   @override
   Widget build(BuildContext context) {
+    final VoidCallback? onProfileTap = _isCurrentUser
+        ? () => AppNavigationService.goToTab(context, _profileTabIndex)
+        : null;
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AvatarWidget(imagePath: comment.avatarPath, size: 40),
+        GestureDetector(
+          onTap: onProfileTap,
+          child: AvatarWidget(imagePath: comment.avatarPath, size: 40),
+        ),
         const SizedBox(width: 10),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                comment.userName,
-                style: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xFF1A1A1A),
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: onProfileTap,
+                child: Text(
+                  comment.userName,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF1A1A1A),
+                  ),
                 ),
               ),
               const SizedBox(height: 4),

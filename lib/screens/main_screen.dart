@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../services/app_navigation_service.dart';
 import '../widgets/bottom_bar.dart';
 import 'home_screens/home_screens.dart';
 import 'explore_screens/explore_screens.dart';
@@ -21,12 +22,24 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     _currentIndex = widget.initialIndex;
+    AppNavigationService.tabIndex.value = widget.initialIndex;
+    AppNavigationService.tabIndex.addListener(_syncTabIndex);
+  }
+
+  @override
+  void dispose() {
+    AppNavigationService.tabIndex.removeListener(_syncTabIndex);
+    super.dispose();
+  }
+
+  void _syncTabIndex() {
+    setState(() {
+      _currentIndex = AppNavigationService.tabIndex.value;
+    });
   }
 
   void _onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
+    AppNavigationService.tabIndex.value = index;
   }
 
   @override
