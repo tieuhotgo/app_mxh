@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import '../../services/mock_data_service.dart';
 import '../../widgets/bottom_bar.dart';
 import '../../widgets/explore_image.dart';
+import '../../widgets/avatar.dart';
 
 class ProfileScreen extends StatefulWidget {
   final Widget? bottomNavigationBar;
@@ -107,7 +108,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Positioned(
           left: 20,
           top: _coverHeight - (_avatarSize - _avatarOverflow),
-          child: _buildAvatar(),
+          child: const AvatarWidget(
+            imagePath: 'assets/images/avt.webp',
+            size: _avatarSize,
+            borderWidth: 4,
+            showShadow: true,
+          ),
         ),
       ],
     );
@@ -127,38 +133,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: const Icon(Icons.broken_image, color: Colors.grey, size: 40),
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildAvatar() {
-    return Container(
-      width: _avatarSize,
-      height: _avatarSize,
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.15),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: ClipOval(
-        child: Image.asset(
-          'assets/images/avt.webp',
-          fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) {
-            return Container(
-              color: Colors.grey.shade200,
-              alignment: Alignment.center,
-              child: const Icon(Icons.person, color: Colors.grey, size: 48),
-            );
-          },
-        ),
       ),
     );
   }

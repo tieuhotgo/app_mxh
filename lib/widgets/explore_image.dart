@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 class ExploreImageWidget extends StatelessWidget {
   final String imagePath;
 
-  const ExploreImageWidget({
-    super.key,
-    required this.imagePath,
-  });
+  const ExploreImageWidget({super.key, required this.imagePath});
 
   @override
   Widget build(BuildContext context) {

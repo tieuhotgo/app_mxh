@@ -1,3 +1,4 @@
+import '../models/comment_model.dart';
 import '../models/post_model.dart';
 
 class MockDataService {
@@ -50,4 +51,68 @@ class MockDataService {
       (index) => 'assets/images/ca_nhan_${index + 1}.webp',
     );
   }
+
+  static const String _avatarNam = 'assets/images/avt_2.webp';
+  static const String _avatarNu = 'assets/images/avt_3.webp';
+
+  static const List<_CommentUser> _commentUsers = [
+    _CommentUser('Nguyễn Văn A', _avatarNam),
+    _CommentUser('Lê Thị B', _avatarNu),
+    _CommentUser('Trần Văn C', _avatarNam),
+    _CommentUser('Phạm Thị D', _avatarNu),
+    _CommentUser('Võ Văn E', _avatarNam),
+  ];
+
+  static const List<String> _defaultCommentTexts = [
+    'Bài viết hay quá, cảm ơn bạn đã chia sẻ.',
+    'Nhìn thích thật, mình sẽ lưu lại.',
+    'Ảnh đẹp quá, bạn chụp ở đâu vậy?',
+    'Đúng là chủ đề mình đang quan tâm.',
+    'Mong bạn đăng thêm nhiều bài như vậy nữa.',
+  ];
+
+  static const Map<String, List<String>> _commentTexts = {
+    '1': [
+      'Nhìn bát phở này là thấy đói liền luôn rồi.',
+      'Nước dùng trong vậy chắc ngọt thanh lắm, quán nào ở Hà Nội vậy bạn?',
+      'Phở Hà Nội đúng chuẩn là ít rau, thêm tí tỏi ngâm giấm. Đồng ý!',
+      'Lưu bài lại, lần sau ra Hà Nội nhất định phải thử.',
+      'Sáng mai đi ăn phở thôi, cảm ơn bạn đã gợi ý nhé.',
+    ],
+    '2': [
+      'Nước biển xanh quá, nhìn mà muốn xách vali đi ngay.',
+      'Cuối tuần này có ai rủ đi Phú Quốc không, mình xin đi ké!',
+      'Mùa này đi có đông không bạn, mình đang tính đặt vé.',
+      'Cát trắng mịn thật, đúng chuẩn thiên đường luôn.',
+      'Ảnh đẹp quá, bạn chụp ở bãi nào vậy?',
+    ],
+    '3': [
+      'Cà phê muối là chân ái của mình, uống một lần là nghiện.',
+      'Quán này xinh quá, có chỗ ngồi làm việc yên tĩnh không bạn?',
+      'Lần đầu nghe vị mặn mà lại hợp với cà phê thế, phải thử mới được.',
+      'Chill chill đúng nghĩa, chiều nay mình ghé thử.',
+      'Cho mình xin địa chỉ quán với nhé.',
+    ],
+  };
+
+  static List<CommentModel> getComments(String postId) {
+    final List<String> texts = _commentTexts[postId] ?? _defaultCommentTexts;
+
+    return List.generate(texts.length, (index) {
+      final _CommentUser user = _commentUsers[index % _commentUsers.length];
+      return CommentModel(
+        id: '${postId}_$index',
+        userName: user.name,
+        avatarPath: user.avatarPath,
+        content: texts[index],
+      );
+    });
+  }
+}
+
+class _CommentUser {
+  final String name;
+  final String avatarPath;
+
+  const _CommentUser(this.name, this.avatarPath);
 }

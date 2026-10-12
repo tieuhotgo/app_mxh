@@ -2,39 +2,21 @@ import 'package:flutter/material.dart';
 
 import '../models/post_model.dart';
 import '../screens/home_screens/post_detail_screens.dart';
+import 'post_action_bar.dart';
 
-class PostWidget extends StatefulWidget {
+class PostWidget extends StatelessWidget {
   final PostModel post;
 
   const PostWidget({super.key, required this.post});
 
-  @override
-  State<PostWidget> createState() => _PostWidgetState();
-}
-
-class _PostWidgetState extends State<PostWidget> {
-  late bool _isLiked;
-  late int _likeCount;
-
-  @override
-  void initState() {
-    super.initState();
-    _isLiked = false;
-    _likeCount = widget.post.likes;
-  }
-
-  void _openDetail() {
+  void _openDetail(BuildContext context, {bool openCommentInput = false}) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (_) => PostDetailScreen(post: widget.post)),
+      MaterialPageRoute(
+        builder: (_) =>
+            PostDetailScreen(post: post, openCommentInput: openCommentInput),
+      ),
     );
-  }
-
-  void _toggleLike() {
-    setState(() {
-      _isLiked = !_isLiked;
-      _likeCount += _isLiked ? 1 : -1;
-    });
   }
 
   @override
@@ -56,7 +38,7 @@ class _PostWidgetState extends State<PostWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           GestureDetector(
-            onTap: _openDetail,
+            onTap: () => _openDetail(context),
             child: ClipRRect(
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(16),
@@ -64,7 +46,7 @@ class _PostWidgetState extends State<PostWidget> {
               child: AspectRatio(
                 aspectRatio: 16 / 9,
                 child: Image.asset(
-                  widget.post.imagePath,
+                  post.imagePath,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
                     return Container(
@@ -89,12 +71,12 @@ class _PostWidgetState extends State<PostWidget> {
               children: [
                 GestureDetector(
                   behavior: HitTestBehavior.opaque,
-                  onTap: _openDetail,
+                  onTap: () => _openDetail(context),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Text(
-                        widget.post.title,
+                        post.title,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
@@ -104,7 +86,7 @@ class _PostWidgetState extends State<PostWidget> {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        widget.post.description,
+                        post.description,
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
@@ -117,75 +99,15 @@ class _PostWidgetState extends State<PostWidget> {
                 ),
                 const SizedBox(height: 14),
 
-                Row(
-                  children: [
-                    _buildInteractionItem(
-                      icon: _isLiked ? Icons.favorite : Icons.favorite_border,
-                      color: _isLiked ? Colors.red : null,
-                      count: _likeCount,
-                      iconSize: 22,
-                      onTap: _toggleLike,
-                    ),
-                    const SizedBox(width: 24),
-                    _buildInteractionItem(
-                      icon: Icons.chat_bubble_outline,
-                      count: widget.post.comments,
-                      iconSize: 21,
-                    ),
-                    const SizedBox(width: 24),
-                    _buildInteractionItem(
-                      iconWidget: Image.asset(
-                        'assets/icons/share.png',
-                        width: 22,
-                        height: 22,
-                        color: Colors.grey.shade700,
-                      ),
-                      count: widget.post.shares,
-                    ),
-                  ],
+                PostActionBar(
+                  post: post,
+                  onCommentTap: () =>
+                      _openDetail(context, openCommentInput: true),
                 ),
               ],
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildInteractionItem({
-    IconData? icon,
-    Widget? iconWidget,
-    required int count,
-    double iconSize = 22,
-    Color? color,
-    VoidCallback? onTap,
-  }) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(20),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            iconWidget ??
-                Icon(
-                  icon,
-                  size: iconSize,
-                  color: color ?? Colors.grey.shade700,
-                ),
-            const SizedBox(width: 6),
-            Text(
-              '$count',
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: Colors.grey.shade800,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
