@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/post_model.dart';
 import '../services/post_interaction_service.dart';
+import '../widgets/share_post_dialog.dart';
 
 class PostActionBar extends StatelessWidget {
   final PostModel post;
@@ -46,6 +47,7 @@ class PostActionBar extends StatelessWidget {
                 color: Colors.grey.shade700,
               ),
               count: post.shares,
+              onTap: () => showSharePostDialog(context),
             ),
           ],
         );
