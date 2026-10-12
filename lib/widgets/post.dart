@@ -1,11 +1,41 @@
 import 'package:flutter/material.dart';
 
 import '../models/post_model.dart';
+import '../screens/home_screens/post_detail_screens.dart';
 
-class PostWidget extends StatelessWidget {
+class PostWidget extends StatefulWidget {
   final PostModel post;
 
   const PostWidget({super.key, required this.post});
+
+  @override
+  State<PostWidget> createState() => _PostWidgetState();
+}
+
+class _PostWidgetState extends State<PostWidget> {
+  late bool _isLiked;
+  late int _likeCount;
+
+  @override
+  void initState() {
+    super.initState();
+    _isLiked = false;
+    _likeCount = widget.post.likes;
+  }
+
+  void _openDetail() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => PostDetailScreen(post: widget.post)),
+    );
+  }
+
+  void _toggleLike() {
+    setState(() {
+      _isLiked = !_isLiked;
+      _likeCount += _isLiked ? 1 : -1;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,24 +55,29 @@ class PostWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-            child: AspectRatio(
-              aspectRatio: 16 / 9,
-              child: Image.asset(
-                post.imagePath,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: Colors.grey.shade200,
-                    alignment: Alignment.center,
-                    child: const Icon(
-                      Icons.broken_image,
-                      color: Colors.grey,
-                      size: 40,
-                    ),
-                  );
-                },
+          GestureDetector(
+            onTap: _openDetail,
+            child: ClipRRect(
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(16),
+              ),
+              child: AspectRatio(
+                aspectRatio: 16 / 9,
+                child: Image.asset(
+                  widget.post.imagePath,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: Colors.grey.shade200,
+                      alignment: Alignment.center,
+                      child: const Icon(
+                        Icons.broken_image,
+                        color: Colors.grey,
+                        size: 40,
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ),
@@ -52,23 +87,32 @@ class PostWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  post.title,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF1A1A1A),
-                    letterSpacing: -0.3,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  post.description,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.grey.shade600,
-                    height: 1.35,
+                GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: _openDetail,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        widget.post.title,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xFF1A1A1A),
+                          letterSpacing: -0.3,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        widget.post.description,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.grey.shade600,
+                          height: 1.35,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 14),
@@ -76,14 +120,16 @@ class PostWidget extends StatelessWidget {
                 Row(
                   children: [
                     _buildInteractionItem(
-                      icon: Icons.favorite_border,
-                      count: post.likes,
+                      icon: _isLiked ? Icons.favorite : Icons.favorite_border,
+                      color: _isLiked ? Colors.red : null,
+                      count: _likeCount,
                       iconSize: 22,
+                      onTap: _toggleLike,
                     ),
                     const SizedBox(width: 24),
                     _buildInteractionItem(
                       icon: Icons.chat_bubble_outline,
-                      count: post.comments,
+                      count: widget.post.comments,
                       iconSize: 21,
                     ),
                     const SizedBox(width: 24),
@@ -94,7 +140,7 @@ class PostWidget extends StatelessWidget {
                         height: 22,
                         color: Colors.grey.shade700,
                       ),
-                      count: post.shares,
+                      count: widget.post.shares,
                     ),
                   ],
                 ),
@@ -111,22 +157,36 @@ class PostWidget extends StatelessWidget {
     Widget? iconWidget,
     required int count,
     double iconSize = 22,
+    Color? color,
+    VoidCallback? onTap,
   }) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        iconWidget ?? Icon(icon, size: iconSize, color: Colors.grey.shade700),
-        const SizedBox(width: 6),
-        Text(
-          '$count',
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
-            color: Colors.grey.shade800,
-          ),
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(20),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            iconWidget ??
+                Icon(
+                  icon,
+                  size: iconSize,
+                  color: color ?? Colors.grey.shade700,
+                ),
+            const SizedBox(width: 6),
+            Text(
+              '$count',
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                color: Colors.grey.shade800,
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

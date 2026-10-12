@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../screens/home_screens.dart';
-import '../screens/explore_screens.dart';
-import '../screens/profile_screens.dart';
+import '../screens/home_screens/home_screens.dart';
+import '../screens/explore_screens/explore_screens.dart';
+import '../screens/profile_screens/profile_screens.dart';
 
 class BottomBar extends StatelessWidget {
   final int currentIndex;

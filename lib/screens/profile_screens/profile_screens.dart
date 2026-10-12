@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../services/mock_data_service.dart';
-import '../widgets/bottom_bar.dart';
-import '../widgets/explore_image.dart';
+import '../../services/mock_data_service.dart';
+import '../../widgets/bottom_bar.dart';
+import '../../widgets/explore_image.dart';
 
 class ProfileScreen extends StatefulWidget {
   final Widget? bottomNavigationBar;
@@ -24,7 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   static const Color _primary = Color(0xFF1976D2);
 
   static const String _name = 'Nguyễn Thị Asa';
-  static const String _bio = 'Nhiếp ảnh gia đường phố | Sài Gòn';
+  static const String _bio = 'Rapper, vũ công, sáng tác nhạc | BABYMONSTER';
   static const int _posts = 128;
   static const int _followers = 12400;
   static const int _following = 356;

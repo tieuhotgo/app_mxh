@@ -6,6 +6,7 @@ class PostModel {
   final int likes;
   final int comments;
   final int shares;
+  final String content;
 
   const PostModel({
     required this.id,
@@ -15,5 +16,6 @@ class PostModel {
     required this.likes,
     required this.comments,
     required this.shares,
+    this.content = '',
   });
 }

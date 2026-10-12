@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../services/mock_data_service.dart';
-import '../widgets/bottom_bar.dart';
-import '../widgets/explore_image.dart';
+import '../../services/mock_data_service.dart';
+import '../../widgets/bottom_bar.dart';
+import '../../widgets/explore_image.dart';
 
 class ExploreScreen extends StatelessWidget {
   final Widget? bottomNavigationBar;
