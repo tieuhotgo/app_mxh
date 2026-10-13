@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../services/app_navigation_service.dart';
 import '../widgets/bottom_bar.dart';
-import 'home_screens/home_screens.dart';
-import 'explore_screens/explore_screens.dart';
-import 'profile_screens/profile_screens.dart';
+import 'home_screens/home_screen.dart';
+import 'explore_screens/explore_screen.dart';
+import 'profile_screens/profile_screen.dart';
 
 class MainScreen extends StatefulWidget {
   final int initialIndex;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/post_model.dart';
-import '../screens/home_screens/post_detail_screens.dart';
+import '../screens/home_screens/post_detail_screen.dart';
 import 'post_action_bar.dart';
 
 class PostWidget extends StatelessWidget {

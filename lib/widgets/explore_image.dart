@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../screens/explore_screens/image_viewer_screens.dart';
+import '../screens/explore_screens/image_viewer_screen.dart';
 
 class ExploreImageWidget extends StatelessWidget {
   final List<String> images;
