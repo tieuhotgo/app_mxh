@@ -12,24 +12,10 @@ class ExploreImageWidget extends StatelessWidget {
     required this.index,
   });
 
-  void _openViewer(BuildContext context) {
-    Navigator.push(
-      context,
-      PageRouteBuilder(
-        transitionDuration: const Duration(milliseconds: 250),
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            ImageViewerScreen(images: images, initialIndex: index),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          return FadeTransition(opacity: animation, child: child);
-        },
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _openViewer(context),
+      onTap: () => openImageViewer(context, images, index),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: Image.asset(

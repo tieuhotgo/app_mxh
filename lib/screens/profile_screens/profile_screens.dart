@@ -5,6 +5,7 @@ import '../../services/mock_data_service.dart';
 import '../../widgets/bottom_bar.dart';
 import '../../widgets/explore_image.dart';
 import '../../widgets/avatar.dart';
+import '../explore_screens/image_viewer_screens.dart';
 
 class ProfileScreen extends StatefulWidget {
   final Widget? bottomNavigationBar;
@@ -23,6 +24,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   static const double _avatarSize = 124;
   static const double _avatarOverflow = 40;
   static const Color _primary = Color(0xFF1976D2);
+  static const String _avatarPath = 'assets/images/avt.webp';
+  static const String _coverPath = 'assets/images/anh_bia.webp';
 
   static const String _name = 'Nguyễn Thị Asa';
   static const String _bio = 'Rapper, vũ công, sáng tác nhạc | BABYMONSTER';
@@ -46,17 +49,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     setState(() {
       _isFollowing = !_isFollowing;
     });
-  }
-
-  void _onMessagePressed() {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        const SnackBar(
-          content: Text('Tính năng chưa phát triển'),
-          duration: Duration(seconds: 2),
-        ),
-      );
   }
 
   @override
@@ -108,11 +100,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Positioned(
           left: 20,
           top: _coverHeight - (_avatarSize - _avatarOverflow),
-          child: const AvatarWidget(
-            imagePath: 'assets/images/avt.webp',
-            size: _avatarSize,
-            borderWidth: 4,
-            showShadow: true,
+          child: GestureDetector(
+            onTap: () => openImageViewer(context, const [_avatarPath], 0),
+            child: const AvatarWidget(
+              imagePath: _avatarPath,
+              size: _avatarSize,
+              borderWidth: 4,
+              showShadow: true,
+            ),
           ),
         ),
       ],
@@ -120,19 +115,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildCover() {
-    return SizedBox(
-      height: _coverHeight,
-      width: double.infinity,
-      child: Image.asset(
-        'assets/images/anh_bia.webp',
-        fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) {
-          return Container(
-            color: Colors.grey.shade300,
-            alignment: Alignment.center,
-            child: const Icon(Icons.broken_image, color: Colors.grey, size: 40),
-          );
-        },
+    return GestureDetector(
+      onTap: () => openImageViewer(context, const [_coverPath], 0),
+      child: SizedBox(
+        height: _coverHeight,
+        width: double.infinity,
+        child: Image.asset(
+          _coverPath,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return Container(
+              color: Colors.grey.shade300,
+              alignment: Alignment.center,
+              child: const Icon(
+                Icons.broken_image,
+                color: Colors.grey,
+                size: 40,
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -251,7 +253,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         const SizedBox(width: 12),
         Expanded(
           child: OutlinedButton(
-            onPressed: _onMessagePressed,
+            onPressed: () {},
             style: OutlinedButton.styleFrom(
               minimumSize: buttonSize,
               shape: shape,

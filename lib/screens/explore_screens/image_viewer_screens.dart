@@ -1,6 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+void openImageViewer(BuildContext context, List<String> images, int index) {
+  Navigator.push(
+    context,
+    PageRouteBuilder(
+      transitionDuration: const Duration(milliseconds: 250),
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          ImageViewerScreen(images: images, initialIndex: index),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(opacity: animation, child: child);
+      },
+    ),
+  );
+}
+
 class ImageViewerScreen extends StatefulWidget {
   final List<String> images;
   final int initialIndex;
@@ -84,15 +98,17 @@ class _ImageViewerScreenState extends State<ImageViewerScreen> {
                         onPressed: () => Navigator.pop(context),
                       ),
                       Expanded(
-                        child: Text(
-                          '${_currentIndex + 1} / ${widget.images.length}',
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                        child: widget.images.length > 1
+                            ? Text(
+                                '${_currentIndex + 1} / ${widget.images.length}',
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              )
+                            : const SizedBox.shrink(),
                       ),
                       const SizedBox(width: 48),
                     ],
