@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../services/image_tag_service.dart';
 import '../../services/mock_data_service.dart';
 import '../../widgets/bottom_bar.dart';
 import '../../widgets/explore_image.dart';
 
-class ExploreScreen extends StatelessWidget {
+class ExploreScreen extends StatefulWidget {
   final Widget? bottomNavigationBar;
 
   const ExploreScreen({
@@ -13,8 +14,23 @@ class ExploreScreen extends StatelessWidget {
   });
 
   @override
+  State<ExploreScreen> createState() => _ExploreScreenState();
+}
+
+class _ExploreScreenState extends State<ExploreScreen> {
+  final TextEditingController _searchController = TextEditingController();
+  String _query = '';
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final List<String> images = MockDataService.getExploreImages();
+    final List<String> allImages = MockDataService.getExploreImages();
+    final List<String> images = ImageTagService.search(allImages, _query);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -39,6 +55,13 @@ class ExploreScreen extends StatelessWidget {
         child: Column(
           children: [
             TextField(
+              controller: _searchController,
+              textInputAction: TextInputAction.search,
+              onChanged: (value) {
+                setState(() {
+                  _query = value;
+                });
+              },
               decoration: InputDecoration(
                 prefixIcon: const Icon(
                   Icons.search,
@@ -78,25 +101,34 @@ class ExploreScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: images.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                childAspectRatio: 0.75,
+            if (images.isEmpty)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 60),
+                child: Text(
+                  'Không tìm thấy ảnh phù hợp',
+                  style: TextStyle(color: Colors.grey.shade600, fontSize: 15),
+                ),
+              )
+            else
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: images.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  childAspectRatio: 0.75,
+                ),
+                itemBuilder: (context, index) {
+                  return ExploreImageWidget(images: images, index: index);
+                },
               ),
-              itemBuilder: (context, index) {
-                return ExploreImageWidget(images: images, index: index);
-              },
-            ),
             const SizedBox(height: 16),
           ],
         ),
       ),
-      bottomNavigationBar: bottomNavigationBar,
+      bottomNavigationBar: widget.bottomNavigationBar,
     );
   }
 }
