@@ -4,28 +4,24 @@ class ImageTagService {
   static const List<String> _thienNhien = ['thiên nhiên'];
 
   static const Map<String, List<String>> _tags = {
-    'assets/images/kham_pha_1.webp': [..._doAn, 'phở', 'phở bò'],
+    'assets/images/kham_pha_1.webp': [..._doAn, 'phở bò'],
     'assets/images/kham_pha_2.webp': [
       ..._phongCanh,
       ..._thienNhien,
       'biển',
-      'vịnh',
       'vịnh hạ long',
-      'hạ long',
       'thuyền',
       'núi đá',
     ],
     'assets/images/kham_pha_3.webp': [
       ..._phongCanh,
       ..._thienNhien,
-      'núi',
       'đỉnh núi',
       'fansipan',
       'sa pa',
       'mây',
     ],
     'assets/images/kham_pha_4.webp': [
-      'cà phê',
       'cà phê muối',
       'cafe',
       'đồ uống',
@@ -37,7 +33,7 @@ class ImageTagService {
       'hà nội',
       'thành phố',
     ],
-    'assets/images/kham_pha_6.webp': [..._thienNhien, 'hoa', 'hoa sen', 'sen'],
+    'assets/images/kham_pha_6.webp': [..._thienNhien, 'hoa sen'],
     'assets/images/kham_pha_7.webp': [
       ..._phongCanh,
       ..._thienNhien,
@@ -49,7 +45,6 @@ class ImageTagService {
     'assets/images/kham_pha_9.webp': [
       ..._phongCanh,
       ..._thienNhien,
-      'biển',
       'bãi biển',
       'bãi cát',
       'cây dừa',
@@ -58,9 +53,7 @@ class ImageTagService {
       ..._phongCanh,
       ..._thienNhien,
       'biển',
-      'vịnh',
       'vịnh hạ long',
-      'hạ long',
       'hoàng hôn',
       'thuyền',
       'núi đá',
@@ -69,7 +62,6 @@ class ImageTagService {
       ..._phongCanh,
       ..._thienNhien,
       'đồng cỏ',
-      'hoa',
       'hoa cúc',
       'núi',
       'hồ',
@@ -78,15 +70,12 @@ class ImageTagService {
       ..._phongCanh,
       ..._thienNhien,
       'rừng tre',
-      'tre',
-      'rừng',
     ],
     'assets/images/kham_pha_13.webp': [
       ..._phongCanh,
       ..._thienNhien,
       'hồ',
       'cây cầu',
-      'cầu',
       'vườn',
       'công viên',
     ],
@@ -95,7 +84,6 @@ class ImageTagService {
       ..._thienNhien,
       'núi phú sĩ',
       'nhật bản',
-      'núi',
       'hồ',
     ],
     'assets/images/kham_pha_15.webp': [
@@ -103,7 +91,7 @@ class ImageTagService {
       ..._thienNhien,
       'hồ',
       'mùa thu',
-      'cành cây',
+      'lá cây vàng',
     ],
   };
 
