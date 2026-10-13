@@ -85,7 +85,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 delegate: SliverChildBuilderDelegate(
                   (context, index) =>
-                      ExploreImageWidget(imagePath: images[index]),
+                      ExploreImageWidget(images: images, index: index),
                   childCount: images.length,
                 ),
               ),

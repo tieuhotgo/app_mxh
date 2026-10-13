@@ -89,7 +89,7 @@ class ExploreScreen extends StatelessWidget {
                 childAspectRatio: 0.75,
               ),
               itemBuilder: (context, index) {
-                return ExploreImageWidget(imagePath: images[index]);
+                return ExploreImageWidget(images: images, index: index);
               },
             ),
             const SizedBox(height: 16),
